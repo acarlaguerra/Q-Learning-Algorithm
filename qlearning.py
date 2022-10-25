@@ -83,7 +83,7 @@ reward_matrix[4,3] = 10
 #        E AFINS        #
 # --------------------- #
 
-Q_matrix = np.zeros(6,4)
+Q_matrix = np.zeros((6,4))
 Q_matrix[5,0] = 10
 Q_matrix[5,1] = 10
 Q_matrix[5,2] = 10
@@ -97,7 +97,36 @@ actions_list = ['UP', 'DOWN', 'LEFT', 'RIGHT']
 # ---------------------- #
 #        FUNÇÕES         #
 # ---------------------- #
-#função de inicialização, cálculo do resultado de ações e de atualização de Q
+#função para calcular o próximo estado
+def to_next_state(state, transition_row):
+    next_list = []
+    #queremos guardar os valores não nulos da linha da matriz
+    for index in range(len(transition_row)):
+        # transition_row = transition_row[0][in]
+        print('t-row ', transition_row[state][index])
+        print('t-row ', len(transition_row))
+        if transition_row[state][index] != 0:
+            next_list.append((transition_row[state][index], index))
+
+    #ordenamos a nossa lista a partir do primeiro elemento de cada tupla
+    type = [('t_row', float), ('index', int)]
+    aux_nlist = np.array(next_list, dtype=type)
+    sorted_nlist = np.sort(aux_nlist, order='t_row')
+    ##printar a sorted list
+
+    #somatorio dos valores da t_row
+    t_row_sorted = [value[0] for value in sorted_nlist]
+    cumulative_sum = np.cumsum(t_row_sorted)
+
+    #escolhendo qual valor será usado no next state
+    random_num = random.random()
+
+    for k in range(len(cumulative_sum)):
+        if cumulative_sum[k] > random_num:
+            break
+
+    return(sorted_nlist[k])
+
 
 #função de atualização de Q
 def Q_update(curr_state, action_index, next_state):
@@ -123,7 +152,7 @@ for i in range(25):
         else:
             transition_state = matrix_right[curr_state]
 
-        ##chama a função pra calcular o próximo estado next_state = 
+        next_state =to_next_state(curr_state, transition_state)
 
         Q_matrix[curr_state, num_rand] = Q_update(curr_state, num_rand, next_state)
 
@@ -131,3 +160,6 @@ for i in range(25):
 
         if (curr_state == 6):
             the_end = True
+
+
+
