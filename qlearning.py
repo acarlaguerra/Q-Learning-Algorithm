@@ -167,3 +167,19 @@ for i in range(25):
 
         if (curr_state == 5):
             the_end = True
+            
+#função para printar a política resultante
+def policy_function(state):
+    #para cada estado da matriz, retorna o índice da coluna com a maior recompensa $$$
+    return np.argmax(Q_matrix(state))
+
+  
+  
+print("Chegamos ao Estado Final! RECOMPENSA: FÉRIAAAS!!!\n")
+print('..........................................................\n')
+print(Q_matrix, '\n')
+print('..........................................................\n')
+print('Política Resultante: ')
+print(actions_list[policy_function(4)], '.....   FÉRIAS')
+print(actions_list[policy_function(2)], '.....', actions_list[policy_function(3)])
+print(actions_list[policy_function(0)], '.....', actions_list[policy_function(1)])
