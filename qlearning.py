@@ -169,7 +169,7 @@ for i in range(25):
 
 
 # ---------------------------- #
-#      PRINT DE RESULTADOS     #
+#      PRINT DOS RESULTADOS     #
 # ---------------------------- #
 
 # Função para printar a política resultante
